@@ -9,10 +9,6 @@ end
 
 
 function _M:test()
-    print_r(config)
-    print_r(self.request.params)
-    self.add_biz_log("collect_data:"..cjson.encode(self.request.params))
-
     return self.response:json(config,200,"OK")
 end
 
