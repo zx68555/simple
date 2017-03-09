@@ -2,6 +2,7 @@ local ngx,type,setmetatable,require = ngx,type,setmetatable,require
 local Request = require 'libs.request'
 local Response = require 'libs.response'
 local log = require 'libs.utils.log'
+local validate = require 'libs.utils.validate'
 local util = require "libs.utils.util"
 
 function print_r( ... )
@@ -13,6 +14,7 @@ local _M = {}
 function _M:new()
     self.request = Request:new()
     self.response = Response:new()
+    self.validate = validate:new(self.request)
     self.log = log
     local instance = {
         module_prefix = 'app.'
@@ -57,7 +59,7 @@ function _M:_route(uri_path_table)
         action = uri_path_table[2]
     end
     local keywords = util:get_keywords()
-    if keywords[action] then
+    if keywords[action] or moudle =='favicon.ico' then
         return 'api', 'index'
     else
         return moudle,action
